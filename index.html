@@ -3,65 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Environment Monitoring System</title>
+    <title>Current Readings - Environment Monitoring System</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body, html {
             height: 100%;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+            background-color: #181a1b;
+            color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100%;
+            width: 90%;
+            max-width: 600px;
+            height: auto;
             padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .content {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            height: 80%;
-        }
-        .table-container, .chart-container {
-            flex: 1;
-            overflow: hidden;
-            margin: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .table-container {
-            overflow-y: auto; /* Enable scrolling for the table if necessary */
+            background: #242526;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border-radius: 10px;
         }
         h1 {
-            text-align: center;
-            margin-bottom: 20px;
             font-size: calc(1.5em + 1vw);
+            margin-bottom: 20px;
+            color: #ffffff;
         }
-        table {
+        .card {
+            background: #3a3b3c;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        th, td {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #dee2e6;
-            font-size: calc(0.6em + 0.3vw);
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
         }
-        th {
-            background-color: #007bff;
-            color: white;
+        .card i {
+            font-size: 1.5em;
+            color: #007bff;
         }
-        canvas {
-            max-width: 100%;
-            max-height: 100%;
+        .card p {
+            font-size: calc(1em + 0.5vw);
+            margin: 0;
+            color: #cfd2d4;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            color: #009eff;
         }
         /* Media query for larger screens */
         @media (min-width: 992px) {
@@ -77,133 +90,43 @@
             .container {
                 height: auto;
             }
-            .content {
-                flex-direction: column;
-                height: auto;
-            }
-            .table-container, .chart-container {
-                margin: 5px; /* Reduced margin for smaller screens */
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Environment Monitoring System</h1>
-        <div class="content">
-            <div class="chart-container">
-                <canvas id="temperatureChart"></canvas>
-                <canvas id="humidityChart"></canvas>
-            </div>
-            <div class="table-container">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Temperature (°C)</th>
-                                <th>Humidity (%)</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody id="data">
-                            <!-- Data will be inserted here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <h1>Current Readings</h1>
+        <nav>
+            <a href="index.html">Current Readings</a>
+            <a href="history.html">View History</a>
+        </nav>
+        <div class="card">
+            <i class="fas fa-thermometer-half"></i>
+            <p id="temperature">Temperature: --</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-tint"></i>
+            <p id="humidity">Humidity: --</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-calendar-alt"></i>
+            <p id="date">Date: --</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-clock"></i>
+            <p id="time">Time: --</p>
         </div>
     </div>
 
     <script>
-        const temperatureChartCtx = document.getElementById('temperatureChart').getContext('2d');
-        const humidityChartCtx = document.getElementById('humidityChart').getContext('2d');
-
-        const temperatureChart = new Chart(temperatureChartCtx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Temperature (°C)',
-                    data: [],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'minute'
-                        }
-                    }
-                }
-            }
-        });
-
-        const humidityChart = new Chart(humidityChartCtx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Humidity (%)',
-                    data: [],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'minute'
-                        }
-                    }
-                }
-            }
-        });
-
         function fetchData() {
             fetch('fetchdata.php')
                 .then(response => response.json())
                 .then(data => {
-                    const tableBody = document.getElementById('data');
-                    tableBody.innerHTML = '';
-
-                    const temperatureData = [];
-                    const humidityData = [];
-                    const labels = [];
-
-                    data.forEach(item => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${item.id}</td>
-                            <td>${item.temperature}</td>
-                            <td>${item.humidity}</td>
-                            <td>${item.Date}</td>
-                            <td>${item.Time}</td>
-                        `;
-                        tableBody.appendChild(row);
-
-                        labels.push(item.Date + ' ' + item.Time);
-                        temperatureData.push(item.temperature);
-                        humidityData.push(item.humidity);
-                    });
-
-                    temperatureChart.data.labels = labels;
-                    temperatureChart.data.datasets[0].data = temperatureData;
-                    temperatureChart.update();
-
-                    humidityChart.data.labels = labels;
-                    humidityChart.data.datasets[0].data = humidityData;
-                    humidityChart.update();
+                    document.getElementById('temperature').textContent = `Temperature: ${data.temperature} °C`;
+                    document.getElementById('humidity').textContent = `Humidity: ${data.humidity} %`;
+                    document.getElementById('date').textContent = `Date: ${data.Date}`;
+                    document.getElementById('time').textContent = `Time: ${data.Time}`;
                 });
         }
 
