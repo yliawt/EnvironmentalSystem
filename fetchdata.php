@@ -1,8 +1,8 @@
 <?php
-$host = "localhost"; // Update to your 000webhost database host if different
-$dbname = "id22312400_environment"; // Update to your database name
-$username = "id22312400_yliawt02"; // Update to your database username
-$password = "ThankYou979!"; // Update to your database password
+$host = "localhost";
+$dbname = "id22312400_environment";
+$username = "id22312400_yliawt02";
+$password = "ThankYou979!";
 
 $conn = new mysqli($host, $username, $password, $dbname);
 
