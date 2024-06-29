@@ -1,3 +1,4 @@
+#VERSION 02
 # Environmental Monitoring System
 
 This project is an Environmental Monitoring System that uses an ESP8266 microcontroller to measure temperature and humidity data using a DHT11 sensor. The data is sent to a MySQL database and displayed on a web interface.
