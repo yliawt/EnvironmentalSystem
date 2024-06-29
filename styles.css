@@ -1,50 +1,64 @@
-html, body {
-    height: 100%; /* Ensures the root element takes full viewport height */
-    margin: 0;
-    padding: 0;
-    overflow: hidden; /* Prevents scrolling */
-    font-family: Arial, sans-serif;
-    background-color: #121212; /* Dark background color */
-}
-
-.container {
-    height: 100%; /* Makes the container fill the entire height */
-    display: flex; /* Enables flexbox */
-    flex-direction: column; /* Stacks children vertically */
-    justify-content: space-between; /* Distributes space around rows */
-}
-
-.dashboard-container {
-    flex: 1; /* Allows the container to expand and fill available space */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
-
+/* General Card Styling */
 .card {
     background: #1e1e1e;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+.card-header {
+    font-size: 1.5em;
+    font-weight: bold;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    color: #fff;
 }
 
-.recent-data-table, .table-responsive {
-    width: 100%;
-    overflow: auto;
-    margin-top: 20px;
+.card-header .fas {
+    margin-right: 10px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
+.card-body {
+    font-size: 1.2em;
 }
 
-th, td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
+/* Highlighting the Current Value */
+.current-value {
+    font-size: 2.5em;  /* Increased size for emphasis */
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #0dcaf0;  /* Light blue color for more visibility */
+}
+
+/* Styling for Min, Max, and Avg values */
+.stats p {
+    font-size: 1em;
+    color: #adb5bd;  /* Grey color for less emphasis compared to current value */
+}
+
+.text-info {
+    color: #17a2b8;  /* Info blue */
+}
+
+.text-danger {
+    color: #dc3545;  /* Danger red */
+}
+
+.text-warning {
+    color: #ffc107;  /* Warning yellow */
+}
+
+/* Animations for fading in data */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.card-body {
+    animation: fadeIn 1s ease-in-out;
 }
