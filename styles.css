@@ -25,28 +25,28 @@
 
 /* Highlighting the Current Value */
 .current-value {
-    font-size: 2.5em;  /* Increased size for emphasis */
+    font-size: 2.5em;
     font-weight: bold;
     margin-bottom: 20px;
-    color: #0dcaf0;  /* Light blue color for more visibility */
+    color: #0dcaf0;
 }
 
 /* Styling for Min, Max, and Avg values */
 .stats p {
     font-size: 1em;
-    color: #adb5bd;  /* Grey color for less emphasis compared to current value */
+    color: #adb5bd;
 }
 
 .text-info {
-    color: #17a2b8;  /* Info blue */
+    color: #17a2b8;
 }
 
 .text-danger {
-    color: #dc3545;  /* Danger red */
+    color: #dc3545;
 }
 
 .text-warning {
-    color: #ffc107;  /* Warning yellow */
+    color: #ffc107;
 }
 
 /* Animations for fading in data */
