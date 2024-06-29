@@ -1,29 +1,50 @@
-body, html {
-margin: 0;
-padding: 0;
-height: 100vh;
-overflow: hidden;
-font-family: Arial, sans-serif;
-background-color: #121212;
-color: white;
+html, body {
+    height: 100%; /* Ensures the root element takes full viewport height */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevents scrolling */
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background color */
+}
+
+.container {
+    height: 100%; /* Makes the container fill the entire height */
+    display: flex; /* Enables flexbox */
+    flex-direction: column; /* Stacks children vertically */
+    justify-content: space-between; /* Distributes space around rows */
 }
 
 .dashboard-container {
-display: flex;
-justify-content: space-around;
-align-items: center;
-height: 100%;
+    flex: 1; /* Allows the container to expand and fill available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .card {
-background: #1e1e1e;
-padding: 20px;
-border-radius: 8px;
-box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-width: 30%;
-min-height: 300px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-around;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.recent-data-table, .table-responsive {
+    width: 100%;
+    overflow: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
