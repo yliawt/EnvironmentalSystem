@@ -12,39 +12,47 @@ DHT dht(DHTPIN, DHTTYPE);
 #define WIFI_PASSWORD "1a2a3a4a" // Your WiFi password
 
 void setup() {
-Serial.begin(115200);
-WiFi.mode(WIFI_STA);
-WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-while (WiFi.status() != WL_CONNECTED) {
-Serial.print(".");
-delay(500);
-}
-Serial.println("Connected to WiFi");
-Serial.print("IP Address: ");
-Serial.println(WiFi.localIP());
-dht.begin();
+    Serial.begin(115200);
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    pinMode(BUZZER_PIN, OUTPUT);
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.print(".");
+        delay(500);
+    }
+    Serial.println("Connected to WiFi");
+    Serial.print("IP Address: ");
+    Serial.println(WiFi.localIP());
+    dht.begin();
 }
 
 void loop() {
-HTTPClient http;
-WiFiClient client;
-float humidity = dht.readHumidity();
-float temperature = dht.readTemperature();
-int gasValue = analogRead(MQ135_PIN);
+    HTTPClient http;
+    WiFiClient client;
+    float humidity = dht.readHumidity();
+    float temperature = dht.readTemperature();
+    int gasValue = analogRead(MQ135_PIN);
 
-String postData = "send_temperature=" + String(temperature) + "&send_humidity=" + String(humidity) + "&send_gas_Value=" + String(gasValue);
-http.begin(client, "http://liawyeeplantmonitoringsystem.000webhostapp.com/dbwrite.php");
-http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-int httpCode = http.POST(postData);
+    // Control the buzzer
+    if (temperature > 32 || gasValue > 700) {
+        digitalWrite(BUZZER_PIN, HIGH); // Turn buzzer on
+    } else {
+        digitalWrite(BUZZER_PIN, LOW); // Turn buzzer off
+    }
 
-if (httpCode == 200) {
-String response = http.getString();
-Serial.println("Data uploaded successfully");
-Serial.println(response);
-} else {
-Serial.println("Failed to upload data");
-}
+    String postData = "temperature=" + String(temperature) + "&humidity=" + String(humidity) + "&gasValue=" + String(gasValue);
+    http.begin(client, "http://liawyeeplantmonitoringsystem.000webhostapp.com/dbwrite.php");
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    int httpCode = http.POST(postData);
 
-http.end();
-delay(10000);
+    if (httpCode == 200) {
+        String response = http.getString();
+        Serial.println("Data uploaded successfully");
+        Serial.println(response);
+    } else {
+        Serial.println("Failed to upload data");
+    }
+
+    http.end();
+    delay(10000);
 }
