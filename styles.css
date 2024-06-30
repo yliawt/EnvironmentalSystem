@@ -1,25 +1,15 @@
-/* General Card Styling */
-
+/* Styling for the header */
 .header {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center;     /* Center vertically */
     height: 100px;           /* Adjust height as needed */
-    background: #000;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
+    background: #343a40;     /* Background color */
+    color: white;            /* Text color */
+    margin-bottom: 20px;     /* Space below the header */
 }
 
-.header h1 {
-    font-size: 3em;
-    font-weight: bold;
-    margin: 0;
-    color: #0dcaf0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-}
-
-
+/* General Card Styling */
 .card {
     background: #1e1e1e;
     padding: 20px;
@@ -46,28 +36,28 @@
 
 /* Highlighting the Current Value */
 .current-value {
-    font-size: 2.5em;
+    font-size: 2.5em;  /* Increased size for emphasis */
     font-weight: bold;
     margin-bottom: 20px;
-    color: #0dcaf0;
+    color: #0dcaf0;  /* Light blue color for more visibility */
 }
 
 /* Styling for Min, Max, and Avg values */
 .stats p {
     font-size: 1em;
-    color: #adb5bd;
+    color: #adb5bd;  /* Grey color for less emphasis compared to current value */
 }
 
 .text-info {
-    color: #17a2b8;
+    color: #17a2b8;  /* Info blue */
 }
 
 .text-danger {
-    color: #dc3545;
+    color: #dc3545;  /* Danger red */
 }
 
 .text-warning {
-    color: #ffc107;
+    color: #ffc107;  /* Warning yellow */
 }
 
 /* Animations for fading in data */
