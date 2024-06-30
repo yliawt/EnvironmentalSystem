@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
+
 <body>
     <div style="background-color: #000; height: 100%;">
         <div class="header">
             <h1>Environmental Sensor System</h1>
-            
         </div>
         <div class="container py-3 h-100">
             <!-- Row 1: Display Latest Data -->
@@ -68,7 +69,18 @@
                     </div>
                 </div>
             </div>
-            <!-- Row 2: Graphs -->
+            <!-- Row 2: Insights -->
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Insights</h5>
+                            <p id="insights">Loading insights...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 3: Graphs -->
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <div class="card bg-light">
@@ -95,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Row 3: Table for Recent Data -->
+            <!-- Row 4: Table for Recent Data -->
             <div class="row">
                 <div class="col">
                     <div class="table-responsive">
@@ -120,4 +132,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
