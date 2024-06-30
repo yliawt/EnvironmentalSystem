@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Readings - Environment Monitoring System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #181a1b;
+            color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 600px;
+            height: auto;
+            padding: 20px;
+            background: #242526;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: calc(1.5em + 1vw);
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .card {
+            background: #3a3b3c;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .card i {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        .card p {
+            font-size: calc(1em + 0.5vw);
+            margin: 0;
+            color: #cfd2d4;
+        }
+        nav {
+            margin-bottom: 20px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            text-decoration: underline;
+            color: #009eff;
+        }
+        /* Media query for larger screens */
+        @media (min-width: 992px) {
+            body, html {
+                overflow: hidden; /* Disable scrolling */
+            }
+        }
+        /* Media query for smaller screens */
+        @media (max-width: 991px) {
+            body, html {
+                overflow: auto; /* Enable scrolling */
+            }
+            .container {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Current Readings</h1>
+        <nav>
+            <a href="index.html">Current Readings</a>
+            <a href="history.html">View History</a>
+        </nav>
+        <div class="card">
+            <i class="fas fa-thermometer-half"></i>
+            <p id="temperature">Temperature: --</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-tint"></i>
+            <p id="humidity">Humidity: --</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-calendar-alt"></i>
+            <p id="date">Date: --</p>
+        </div>
+        <div class="card">
+            <i class="fas fa-clock"></i>
+            <p id="time">Time: --</p>
+        </div>
+    </div>
+
+    <script>
+        function fetchData() {
+            fetch('fetchdata.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperature').textContent = `Temperature: ${data.temperature} °C`;
+                    document.getElementById('humidity').textContent = `Humidity: ${data.humidity} %`;
+                    document.getElementById('date').textContent = `Date: ${data.Date}`;
+                    document.getElementById('time').textContent = `Time: ${data.Time}`;
+                });
+        }
+
+        setInterval(fetchData, 5000); // Fetch data every 5 seconds
+        window.onload = fetchData; // Fetch data when the page loads
+    </script>
+</body>
+</html>
