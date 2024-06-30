@@ -4,14 +4,11 @@
 - [01 MidTerm](#01-midterm)
   - [Hardware & Software Requirements](#hardware--software-requirements)
   - [Setup](#setup)
-    - [Connect the DHT11 sensor to the ESP8266](#connect-the-dht11-sensor-to-the-esp8266)
   - [SQL Structure Table](#sql-structure-table)
+  - 
 - [02 Final](#02-final)
   - [Project Components](#project-components)
   - [Setup](#setup-1)
-    - [Connect the DHT11 sensor to the ESP8266](#connect-the-dht11-sensor-to-the-esp8266-1)
-    - [Connect the MQ135 sensor to the ESP8266](#connect-the-mq135-sensor-to-the-esp8266)
-    - [Connect the buzzer to the ESP8266](#connect-the-buzzer-to-the-esp8266)
   - [SQL Structure Table](#sql-structure-table-1)
 
 ## 01 MidTerm
