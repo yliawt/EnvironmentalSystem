@@ -1,36 +1,35 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$host = "localhost"; // Update to your 000webhost database host if different
-$dbname = "id22312400_environment"; // Update to your database name
-$username = "id22312400_yliawt02"; // Update to your database username
-$password = "ThankYou979!"; // Update to your database password
-
+header('Content-Type: text/plain');
+date_default_timezone_set('Asia/Kuala_Lumpur');
+$host = "localhost";
+$username = "id22365822_liawyee";
+$password = "ThankYou979!";
+$dbname = "id22365822_liawyeeplantmonitoringsystem";
 $conn = new mysqli($host, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die('Database connection failed: ' . $conn->connect_error);
 }
 
-date_default_timezone_set('Asia/Kuala_Lumpur');
-$d = date("Y-m-d");
-$t = date("H:i:s");
+$temperature = $_POST['temperature'] ?? null;
+$humidity = $_POST['humidity'] ?? null;
+$gasValue = $_POST['gasValue'] ?? null;
+$date = date('Y-m-d');
+$time = date('H:i:s');
 
-if (isset($_POST['sendtemperature']) && isset($_POST['sendhumidity'])) {
-    $temperature = $_POST['sendtemperature'];
-    $humidity = $_POST['sendhumidity'];
+$query = "INSERT INTO plantmonitor (date, time, temperature, humidity, gasValue) VALUES (?, ?, ?, ?, ?)";
+$stmt = $conn->prepare($query);
+if ($stmt === false) {
+    die('MySQL prepare error: ' . $conn->error);
+}
 
-    $sql = "INSERT INTO nodemcu_table (temperature, humidity, Date, Time) VALUES ('$temperature', '$humidity', '$d', '$t')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Values inserted in MySQL database table.";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+$stmt->bind_param('sssss', $date, $time, $temperature, $humidity, $gasValue);
+if ($stmt->execute()) {
+    echo "Data inserted successfully\n";
 } else {
-    echo "Temperature or humidity not set in POST data.";
+    echo "Error inserting data: " . $stmt->error . "\n";
 }
 
+$stmt->close();
 $conn->close();
 ?>
