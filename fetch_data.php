@@ -13,9 +13,9 @@ if ($conn->connect_error) {
 
 // Aggregate queries for temperature, humidity, and gas
 $query = "SELECT MAX(temperature) AS maxTemp, MIN(temperature) AS minTemp, AVG(temperature) AS avgTemp,
-          MAX(humidity) AS maxHumidity, MIN(humidity) AS minHumidity, AVG(humidity) AS avgHumidity,
-          MAX(gasValue) AS maxGas, MIN(gasValue) AS minGas, AVG(gasValue) AS avgGas
-          FROM plantmonitor;";
+MAX(humidity) AS maxHumidity, MIN(humidity) AS minHumidity, AVG(humidity) AS avgHumidity,
+MAX(gasValue) AS maxGas, MIN(gasValue) AS minGas, AVG(gasValue) AS avgGas
+FROM plantmonitor;";
 $result = $conn->query($query);
 if ($result) {
     $aggregates = $result->fetch_assoc();
